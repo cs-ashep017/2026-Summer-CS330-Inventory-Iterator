@@ -47,8 +47,7 @@ public class Inventory implements Iterable<ItemStack>, Cloneable
     /**
      * Default to an inventory with 10 slots.
      */
-    public Inventory()
-    {
+    public Inventory() {
         this(DEFAULT_SIZE);
     }
 
@@ -88,8 +87,7 @@ public class Inventory implements Iterable<ItemStack>, Cloneable
         return this.capacity;
     }
 
-    /**
-     * Determine if the inventory is considered full.
+    /** * Determine if the inventory is considered full.
      *
      * @return true if the current size is equal to capacity
      */
@@ -98,8 +96,7 @@ public class Inventory implements Iterable<ItemStack>, Cloneable
         // Replace the next line
         return this.utilizedSlots()==this.capacity;
     }
-
-    /**
+/**
      * Determine if the inventory is empty.
      *
      * @return true if current size is zero
@@ -150,8 +147,7 @@ public class Inventory implements Iterable<ItemStack>, Cloneable
      * @return true if *stack* was added and false otherwise
      */
     public boolean addItems(ItemStack stack)
-    {
-        ItemStack match = this.findMatchingItemStack(stack);
+    { ItemStack match = this.findMatchingItemStack(stack);
 
         // if a match was found
         if (match != null) {
@@ -162,7 +158,6 @@ public class Inventory implements Iterable<ItemStack>, Cloneable
                 return true;
             }
         }
-
         if (this.slots.size() < capacity) {
             this.addItemStackNoCheck(stack);
             return true;
@@ -172,8 +167,7 @@ public class Inventory implements Iterable<ItemStack>, Cloneable
     }
 
     @Override
-    public Inventory clone()
-    {
+    public Inventory clone() {
         Inventory copy = new Inventory(this.totalSlots());
        Iterator<ItemStack> it = iterator();
        while (it.hasNext())
@@ -223,11 +217,23 @@ public class Inventory implements Iterable<ItemStack>, Cloneable
         String summaryLine = String.format(
             " -Used %d of %d slots%n", this.utilizedSlots(), this.totalSlots()
         );
-
-        StringBuilder strBld = new StringBuilder();
+StringBuilder strBld = new StringBuilder();
         strBld.append(summaryLine);
 
         // Add the missing loop
+        Iterator<ItemStack> it = iterator();
+        while(it.hasNext())
+        { ItemStack current = it.next(); strBld.append("  ("); if (current.size()<10)
+            {
+                strBld.append(" ");
+            }
+            strBld.append(current.size());
+            strBld.append(") ");
+            strBld.append(current.getItem().getName());
+            strBld.append(System.lineSeparator());
+        }
+
+
 
         return strBld.toString();
     }
