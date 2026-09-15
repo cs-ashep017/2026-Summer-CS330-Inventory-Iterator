@@ -175,8 +175,12 @@ public class Inventory implements Iterable<ItemStack>, Cloneable
     public Inventory clone()
     {
         Inventory copy = new Inventory(this.totalSlots());
+       Iterator<ItemStack> it = iterator();
+       while (it.hasNext())
+       {
+           copy.slots.add(it.next());
+       }
 
-        // Add the missing copy logic (loop)
 
         return copy;
     }
